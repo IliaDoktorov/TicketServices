@@ -1,0 +1,14 @@
+server:
+  port: 8089
+
+spring:
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/tickets_db
+    driver-class-name: org.postgresql.Driver
+
+properties:
+  jwt_secret: SecretKey10687JghhHQysdf5578
+  refreshTokenDurationS: 360
+  accessTokenDurationS: 120
