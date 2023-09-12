@@ -1,0 +1,13 @@
+services:
+  ticketservice:
+    build:
+      context: .
+      dockerfile: TicketService/Dockerfile
+    ports:
+      - 8089:8089
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ticketdatabase:5432/tickets_db
+  ticketdatabase:
+    build:
+      context: .
+      dockerfile: TicketService/Dockerfile_db
