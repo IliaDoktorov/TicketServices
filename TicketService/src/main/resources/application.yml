@@ -7,8 +7,17 @@ spring:
     password: postgres
     url: jdbc:postgresql://localhost:5432/tickets_db
     driver-class-name: org.postgresql.Driver
+  kafka:
+    bootstrap-servers: host.docker.internal:29092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 properties:
   jwt_secret: SecretKey10687JghhHQysdf5578
   refreshTokenDurationS: 360
   accessTokenDurationS: 120
+
+kafka:
+  topics:
+    message-topic: ticket_topic

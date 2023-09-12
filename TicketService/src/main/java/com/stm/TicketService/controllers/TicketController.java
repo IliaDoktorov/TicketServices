@@ -3,6 +3,7 @@ package com.stm.TicketService.controllers;
 import com.stm.TicketService.DTO.FilterRequestDTO;
 import com.stm.TicketService.DTO.ReserveDTO;
 import com.stm.TicketService.DTO.ResponseDTO;
+import com.stm.TicketService.kafka.KafkaProducer;
 import com.stm.TicketService.models.Ticket;
 import com.stm.TicketService.services.TicketService;
 import com.stm.TicketService.util.ErrorCode;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Tag(name = "TicketController", description = "RestController for creating, updating, removing and reservation of tickets")
 @RestController
@@ -36,12 +38,14 @@ public class TicketController {
     private final TicketService ticketService;
     private final TicketValidator ticketValidator;
     private final FilterValidator filterValidator;
+    private final KafkaProducer kafkaProducer;
 
     @Autowired
-    public TicketController(TicketService ticketService, TicketValidator ticketValidator, FilterValidator filterValidator) {
+    public TicketController(TicketService ticketService, TicketValidator ticketValidator, FilterValidator filterValidator, KafkaProducer kafkaProducer) {
         this.ticketService = ticketService;
         this.ticketValidator = ticketValidator;
         this.filterValidator = filterValidator;
+        this.kafkaProducer = kafkaProducer;
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -90,6 +94,13 @@ public class TicketController {
     @PatchMapping(value = "/reserve")
     public ResponseEntity<ResponseDTO> reserve(@RequestBody ReserveDTO reserveDTO) {
         ticketService.reserve(reserveDTO.getCustomerId(), reserveDTO.getTicketId());
+
+        System.out.println("Ticket reserved");
+        Optional<Ticket> ticket = ticketService.getById(reserveDTO.getTicketId());
+
+        System.out.println("Ticket retrieved");
+
+        kafkaProducer.notifyKafka(ticket.get());
 
         return ResponseEntity.ok(new ResponseDTO("Ticket was successfully reserved", LocalDateTime.now(), ErrorCode.SUCCESSFUL));
     }

@@ -17,10 +17,14 @@ public class Ticket {
     private int route;
 
     // use hardcoded timezone and dateTime format
+//    @Schema(description = "Date and Time of departure",
+//    pattern = "dd.MM.yyyy HH:mm",
+//    example = "10.09.2023 13:23")
+//    @JsonFormat(pattern = "dd.MM.yyyy HH:mm", timezone = "Europe/Moscow")
     @Schema(description = "Date and Time of departure",
-    pattern = "dd.MM.yyyy HH:mm",
-    example = "10.09.2023 13:23")
-    @JsonFormat(pattern = "dd.MM.yyyy HH:mm", timezone = "Europe/Moscow")
+            pattern = "yyyy.MM.dd HH:mm",
+            example = "2023.09.20 13:23")
+    @JsonFormat(pattern = "yyyy.MM.dd HH:mm", timezone = "Europe/Moscow")
     private Date dateTime;
 
     @Schema(description = "Price of a ticket")

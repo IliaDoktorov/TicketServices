@@ -81,6 +81,10 @@ public class TicketService {
         ticketDAO.reserve(customerId, ticketId);
     }
 
+    public Optional<Ticket> getById(int id){
+        return ticketDAO.getById(id);
+    }
+
     public List<Ticket> available(int page, int itemsPerPage, FilterRequestDTO filterRequestDTO) {
 
         return ticketDAO.available(page, itemsPerPage, filterRequestDTO);
