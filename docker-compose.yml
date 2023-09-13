@@ -8,16 +8,28 @@ services:
     depends_on:
       ticketdatabase:
         condition: service_started
-    links:
-      - ticketdatabase
     restart: always
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ticketdatabase:5432/tickets_db
   ticketdatabase:
     build:
       context: .
-      dockerfile: TicketService/Dockerfile_db
+      dockerfile: TicketService/db.Dockerfile
     restart: always
+  ticketreplicator:
+    build:
+      context: .
+      dockerfile: TicketReplicator/Dockerfile
+    restart: always
+    depends_on:
+      ticketservice:
+        condition: service_started
+  redis:
+    build:
+      context: .
+      dockerfile: TicketReplicator/redis.Dockerfile
+    ports:
+      - 6379:6379
   kafka1:
     image: confluentinc/cp-kafka:latest
     depends_on:

@@ -8,7 +8,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/tickets_db
     driver-class-name: org.postgresql.Driver
   kafka:
-    bootstrap-servers: host.docker.internal:29092
+    bootstrap-servers: host.docker.internal:29092,host.docker.internal:29093
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -20,4 +20,4 @@ properties:
 
 kafka:
   topics:
-    message-topic: ticket_topic
+    ticket-topic: ticket_topic
