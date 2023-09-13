@@ -8,6 +8,8 @@ services:
     depends_on:
       ticketdatabase:
         condition: service_started
+      kafka-ui:
+        condition: service_started
     restart: always
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ticketdatabase:5432/tickets_db
@@ -73,6 +75,9 @@ services:
       - kafka1
       - kafka2
       - zookeeper
+    depends_on:
+      zookeeper:
+        condition: service_started
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     environment:
