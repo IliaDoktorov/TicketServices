@@ -5,17 +5,18 @@
 - Additional task 4
 
 ## And moreover:
-- docker-compose which launches ticketservice, ticketreplicator, ticketdatabase, zookeeper, kafka1 brocker, kafka2 brocker, kafkaui, redis.
-- Dockerfiles for TicketService and TicketReplicator.
-- Dockerfile for PostgreSQL database. Tables are created automatically using tables.sql as well as some entities for tickets, routes and transporters.
-- Dockerfile for Redis.
-- Jenkinsfile to automate builds, steps are:
-	Clone repo
-	Build TicketService and TicketReplicator
-	Cleanup docker images for ticketservice, ticketreplicator, ticketdatabase from locally launched Docker
-	Cleanup respective contriners as well
-	Create new images
-	Create and launche new contriners
+- [docker-compose.yaml](https://github.com/IliaDoktorov/TicketServices/blob/main/docker-compose.yml) which launches ticketservice, ticketreplicator, ticketdatabase, zookeeper, kafka1 brocker, kafka2 brocker, kafkaui, redis.
+- [Dockerfile](https://github.com/IliaDoktorov/TicketServices/blob/main/TicketService/Dockerfile) for TicketService
+- [Dockerfile](https://github.com/IliaDoktorov/TicketServices/blob/main/TicketReplicator/Dockerfile) for TicketReplicator.
+- [Dockerfile](https://github.com/IliaDoktorov/TicketServices/blob/main/TicketService/db.Dockerfile) for PostgreSQL database. Tables are created automatically using tables.sql as well as some entities for tickets, routes and transporters.
+- [Dockerfile](https://github.com/IliaDoktorov/TicketServices/blob/main/TicketReplicator/redis.Dockerfile) for Redis.
+- [Jenkinsfile](https://github.com/IliaDoktorov/TicketServices/blob/main/Jenkinsfile) to automate builds, steps are:
+	1. Clone repo
+	2. Build TicketService and TicketReplicator
+	3. Cleanup docker images for ticketservice, ticketreplicator, ticketdatabase from locally launched Docker
+	4. Cleanup respective contriners as well
+	5. Create new images
+	6. Create and launch new contriners
 
 ## Instructions for Jenkins Pipeline:
 - Create a Pipeline with any title you want and go to Configure
