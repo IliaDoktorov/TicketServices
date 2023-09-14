@@ -3,10 +3,12 @@ package com.stm.repository;
 import com.stm.models.Ticket;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class RedisRepositoryImpl {
@@ -23,7 +25,7 @@ public class RedisRepositoryImpl {
         hashOperations = redisTemplate.opsForHash();
     }
 
-    public void add(Ticket ticket) {
-        hashOperations.put(ticket.getReservedBy(), ticket.getId(), ticket);
+    public Map<Object, Ticket> findAllByCustomerId(int customerId){
+        return hashOperations.entries(customerId);
     }
 }

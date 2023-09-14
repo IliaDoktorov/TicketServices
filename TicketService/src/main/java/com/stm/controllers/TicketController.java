@@ -5,6 +5,7 @@ import com.stm.DTO.ReserveDTO;
 import com.stm.DTO.ResponseDTO;
 import com.stm.kafka.KafkaProducer;
 import com.stm.models.Ticket;
+import com.stm.repository.RedisRepositoryImpl;
 import com.stm.services.TicketService;
 import com.stm.util.ErrorCode;
 import com.stm.util.FilterValidator;

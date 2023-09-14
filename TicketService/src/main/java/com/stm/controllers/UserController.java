@@ -3,6 +3,7 @@ package com.stm.controllers;
 import com.stm.DTO.ResponseDTO;
 import com.stm.models.Ticket;
 import com.stm.models.User;
+import com.stm.repository.RedisRepositoryImpl;
 import com.stm.services.UserService;
 import com.stm.util.ErrorCode;
 import com.stm.util.RequestException;
@@ -14,6 +15,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.modelmapper.internal.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Tag(name = "UserController", description = "RestController for creating users and getting tickets per user")
 @RestController
@@ -30,11 +36,13 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final UserValidator userValidator;
+    private final RedisRepositoryImpl redisRepository;
 
     @Autowired
-    public UserController(UserService userService, UserValidator userValidator) {
+    public UserController(UserService userService, UserValidator userValidator, RedisRepositoryImpl redisRepository) {
         this.userService = userService;
         this.userValidator = userValidator;
+        this.redisRepository = redisRepository;
     }
 
     @Operation(summary = "User registration", description = "Allows to register new user")
@@ -55,6 +63,14 @@ public class UserController {
     @Operation(summary = "Tickets of user", description = "Retrieve all tickets for specified user")
     @GetMapping("/{id}/tickets")
     public List<Ticket> tickets(@PathVariable("id") @Parameter(description = "Identifier of a user", required = true) int id) {
+
+        // check redis first
+//        System.out.println(redisRepository.findAllByCustomerId(id));
+        Map<Object, Ticket> tickets = redisRepository.findAllByCustomerId(id);
+        if(!tickets.isEmpty()) {
+            System.out.println("Returning ticket from Redis");
+            return new ArrayList<>(tickets.values());
+        }
 
         return userService.tickets(id);
     }

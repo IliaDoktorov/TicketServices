@@ -12,6 +12,10 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  data:
+    redis:
+      host: redis
+      port: 6379
 
 properties:
   jwt_secret: SecretKey10687JghhHQysdf5578

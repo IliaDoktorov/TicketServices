@@ -1,7 +1,7 @@
 package com.stm.listeners;
 
 import com.stm.models.Ticket;
-import com.stm.repository.RedisRepository;
+import com.stm.repository.RedisRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class KafkaTicketListener {
-    private final RedisRepository redisRepository;
+    private final RedisRepositoryImpl redisRepository;
 
     @Autowired
-    public KafkaTicketListener(RedisRepository redisRepository) {
+    public KafkaTicketListener(RedisRepositoryImpl redisRepository) {
         this.redisRepository = redisRepository;
     }
 

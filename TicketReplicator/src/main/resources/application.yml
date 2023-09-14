@@ -4,21 +4,21 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-      name: consumer
+    name: consumer
   kafka:
-      bootstrap-servers: host.docker.internal:29092,host.docker.internal:29093
-      listener:
-        ack-mode: record
-      consumer:
-        group-id: ${spring.application.name}
-        autoOffsetReset: earliest
+    bootstrap-servers: host.docker.internal:29092,host.docker.internal:29093
+    listener:
+      ack-mode: record
+    consumer:
+      group-id: ${spring.application.name}
+      autoOffsetReset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.stm.models.Ticket"
+        spring.json.value.default.type: "com.stm.models.Ticket"
         key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
         value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-        properties:
-          spring.json.trusted.packages: "com.stm.models.Ticket"
-          spring.json.value.default.type: "com.stm.models.Ticket"
-          key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-          value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
   data:
     redis:
       host: redis

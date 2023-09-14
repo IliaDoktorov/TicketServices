@@ -4,11 +4,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Positive;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Schema(description = "Ticket entity")
-public class Ticket {
+public class Ticket implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Schema(description = "Ticket identifier",
     accessMode = Schema.AccessMode.READ_ONLY)
     private int id;
