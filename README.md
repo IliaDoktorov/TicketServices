@@ -2,6 +2,7 @@
 - Basic task
 - Additional task 1
 - Additional task 2
+- Additional task 3
 - Additional task 4
 
 ## And moreover:
