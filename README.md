@@ -34,6 +34,7 @@
 - You could enable "GitHub hook trigger for GITScm polling" for triggering build on commit. In that case you will need to contact with author and request to create a Webhook for your Jenkins server.
 
 ## Ideas how to improve solution
+- Add interfaces for DAO and Service classes to meet DI and OOP principles.
 - Create separate tables for DeparturePoint and DestinationPoint.
 - Create DTO objects for Route, User, Transporter and Ticket to use in JSON REST communication(it might be useful if read-only requests, where we want to get human-frandly view of our enities, i.e. with names and titles instead of ids)
 - Use Lombock to reduce boilerplate code.
