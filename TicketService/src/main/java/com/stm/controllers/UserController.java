@@ -3,6 +3,7 @@ package com.stm.controllers;
 import com.stm.DTO.ResponseDTO;
 import com.stm.models.Ticket;
 import com.stm.models.User;
+import com.stm.repository.RedisRepository;
 import com.stm.repository.RedisRepositoryImpl;
 import com.stm.services.UserService;
 import com.stm.util.ErrorCode;
@@ -36,10 +37,10 @@ import java.util.stream.Collectors;
 public class UserController {
     private final UserService userService;
     private final UserValidator userValidator;
-    private final RedisRepositoryImpl redisRepository;
+    private final RedisRepository redisRepository;
 
     @Autowired
-    public UserController(UserService userService, UserValidator userValidator, RedisRepositoryImpl redisRepository) {
+    public UserController(UserService userService, UserValidator userValidator, RedisRepository redisRepository) {
         this.userService = userService;
         this.userValidator = userValidator;
         this.redisRepository = redisRepository;

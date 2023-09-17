@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RedisRepositoryImpl {
+public class RedisRepositoryImpl implements RedisRepository{
     private final RedisTemplate<String, Object> redisTemplate;
     private HashOperations hashOperations;
 
@@ -23,6 +23,7 @@ public class RedisRepositoryImpl {
         hashOperations = redisTemplate.opsForHash();
     }
 
+    @Override
     public void add(Ticket ticket) {
         hashOperations.put(ticket.getReservedBy(), ticket.getId(), ticket);
     }
